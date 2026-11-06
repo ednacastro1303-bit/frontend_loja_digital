@@ -156,7 +156,7 @@ O carrinho de compras será some um icone renderizado ao lado da area de redirec
 ![](assets/footerInformations.png)
   
 
-- Abaixo de todos os elementos do rodapé, insira um `<hr />` e logo abaixo uma parágrafo com data atual com o texto "© 2024 Digital Store" para indicar os direitos autorais da página.
+- Abaixo de todos os elementos do rodapé, insira um `<hr />` e logo abaixo uma parágrafo com data atual com o texto "© 2026 Digital Store" para indicar os direitos autorais da página.
 
 **Estrutura**
 

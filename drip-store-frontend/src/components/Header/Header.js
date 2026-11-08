@@ -8,6 +8,18 @@ const Header = ({ onSearch, setSearchQuery, searchQuery }) => {
     }
   };
 
+  // Check if user is logged in
+  const isLoggedIn = typeof window !== 'undefined' && (localStorage.getItem('authToken') || sessionStorage.getItem('authToken'));
+  const user = isLoggedIn ? JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}') : null;
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    sessionStorage.removeItem('authToken');
+    sessionStorage.removeItem('user');
+    window.location.href = '/';
+  };
+
   return (
     <header className="bg-white shadow-sm">
       <div className="container">
@@ -26,9 +38,11 @@ const Header = ({ onSearch, setSearchQuery, searchQuery }) => {
             <NavLink to="/categories" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
               Categorias
             </NavLink>
-            <NavLink to="/my-orders" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
-              Meus Pedidos
-            </NavLink>
+            {isLoggedIn && (
+              <NavLink to="/my-orders" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+                Meus Pedidos
+              </NavLink>
+            )}
           </nav>
 
           <div className="d-flex align-items-center gap-3">
@@ -54,14 +68,29 @@ const Header = ({ onSearch, setSearchQuery, searchQuery }) => {
               </button>
             </div>
 
-            <div className="d-flex align-items-center gap-2">
-              <a href="/register" className="text-decoration-none" style={{ fontSize: '16px', color: '#474747' }}>
-                Cadastre-se
-              </a>
-              <a href="/login" className="btn" style={{ width: '114px', height: '40px', backgroundColor: '#C92071', borderRadius: '4px', color: '#FFFFFF', fontWeight: 'bold', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                Entrar
-              </a>
-            </div>
+            {isLoggedIn ? (
+              <div className="d-flex align-items-center gap-2">
+                <span className="text-decoration-none" style={{ fontSize: '16px', color: '#474747' }}>
+                  {user?.firstName || user?.email || 'Usuário'}
+                </span>
+                <button 
+                  onClick={handleLogout}
+                  className="btn"
+                  style={{ width: '114px', height: '40px', backgroundColor: '#C92071', borderRadius: '4px', color: '#FFFFFF', fontWeight: 'bold', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                >
+                  Sair
+                </button>
+              </div>
+            ) : (
+              <div className="d-flex align-items-center gap-2">
+                <a href="/register" className="text-decoration-none" style={{ fontSize: '16px', color: '#474747' }}>
+                  Cadastre-se
+                </a>
+                <a href="/login" className="btn" style={{ width: '114px', height: '40px', backgroundColor: '#C92071', borderRadius: '4px', color: '#FFFFFF', fontWeight: 'bold', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  Entrar
+                </a>
+              </div>
+            )}
 
             <button className="btn p-0" style={{ border: 'none', background: 'none' }}>
               <img src="/mini-cart.svg" alt="Carrinho" style={{ width: '24px', height: '24px' }} />

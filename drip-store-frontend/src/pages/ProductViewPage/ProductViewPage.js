@@ -16,7 +16,7 @@ const ProductViewPage = () => {
     try {
       const response = await fetch(`http://localhost:3000/api/products/${id}`);
       const data = await response.json();
-      setProduct(data);
+      setProduct(data.data || data);
     } catch (error) {
       console.error('Erro ao buscar produto:', error);
       // Mock data fallback

@@ -1,9 +1,11 @@
 import ProductCard from '../ProductCard/ProductCard';
 
 const ProductListing = ({ products }) => {
+  const safeProducts = Array.isArray(products) ? products : [];
+  
   return (
     <div className="row">
-      {products.map((product, index) => (
+      {safeProducts.map((product, index) => (
         <div className="col-6 col-md-3 mb-4" key={index}>
           <ProductCard 
             name={product.name}

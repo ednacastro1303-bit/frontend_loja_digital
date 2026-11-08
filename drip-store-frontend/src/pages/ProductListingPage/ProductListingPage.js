@@ -25,7 +25,7 @@ const ProductListingPage = () => {
     setLoading(true);
     try {
       const response = await fetch('http://localhost:3000/api/products');
-      const productsData = response.json() || [];
+      const productsData = (await response.json()) || [];
       setFilteredProducts(productsData);
     } catch (error) {
       console.error('Erro ao buscar produtos:', error);
@@ -51,7 +51,7 @@ const ProductListingPage = () => {
     setLoading(true);
     try {
       const response = await fetch(`http://localhost:3000/api/products?search=${query}`);
-      const productsData = response.json() || [];
+      const productsData = (await response.json()) || [];
       setFilteredProducts(productsData);
     } catch (error) {
       console.error('Erro ao buscar produtos:', error);
